@@ -1,4 +1,5 @@
 ﻿using Error404_Web.Models.BUS;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,83 +15,6 @@ namespace Error404_Web.Controllers
         {
             productBUS = new ProductBUS();
         }
-        // GET: Product
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: Product/Details/5
-        public ActionResult Details(string id)
-        {
-            var db = productBUS.ChiTiet(id);
-            return View(db);
-        }
-
-        // GET: Product/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Product/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Product/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Product/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Product/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Product/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

@@ -10,7 +10,6 @@ $(document).ready(function(){
     const ul_grid = $(".pagination-bar");
     ul_grid.append('<li><a href="#" class="prev"><i class="fa fa-chevron-left"></i></a></li>');
     //shop grid
-    console.log("1")
     for(i = 0;i < numPagesGrid;i++) {
         var pageNum = i + 1;
         ul_grid.append('<li><a class="pagi-num" href="#" rel="'+i+'">'+pageNum+'</a></li> ');

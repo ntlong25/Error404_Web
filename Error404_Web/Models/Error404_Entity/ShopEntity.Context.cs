@@ -11,20 +11,18 @@ namespace Error404_Web.Models.Error404_Entity
 {
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
     
     public partial class AppleEntities : DbContext
     {
-        public AppleEntities()
-            : base("name=AppleEntities")
-        {
-        }
+        public AppleEntities() : base("name=AppleEntities") { }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Cart> Cart { get; set; }
         public virtual DbSet<CTOrder> CTOrder { get; set; }
         public virtual DbSet<DanhMuc> DanhMuc { get; set; }
@@ -36,5 +34,19 @@ namespace Error404_Web.Models.Error404_Entity
         public virtual DbSet<SanPham> SanPham { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TaiKhoan> TaiKhoan { get; set; }
+
+
+        public virtual ObjectResult<string> CheckLogin(string email, string password)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("username", email) :
+                new ObjectParameter("username", typeof(string));
+
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("CheckLogin", emailParameter, passwordParameter);
+        }
     }
 }

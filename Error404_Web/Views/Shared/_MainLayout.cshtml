@@ -77,14 +77,6 @@
     ============================================ -->
     <link rel="stylesheet" href="~/Assets/css/ie.css">
 
-    <!-- THUCUDOIMOI CSS
-    ============================================
-    <link rel="stylesheet" href="~/Assets/css/thucudoimoi.css">
-
-    <!-- BAOHANH CSS
-    ============================================ 
-    <link rel="stylesheet" href="~/Assets/css/baohanh.css">
-
     <!-- CHECKOUT CSS
     ============================================ 
     <link rel="stylesheet" href="~/Assets/css/checkout.css">-->
@@ -95,10 +87,37 @@
 
 </head>
 <body>
+
+    <div id="testAjax">kết quả</div>
+
+    <button id="tesAjax" type="button" onclick="testLong()">adgsrhg</button>
+
+    <input type="button" value="febfnfwenfi" onclick="testLong()" />
+
+    @Html.Partial("_LoginAndSignin")
     @{ Html.RenderPartial("_Header");}
     @RenderBody()
+
     @{ Html.RenderPartial("_Footer");}
+    @RenderSection("scripts", required: false)
 </body>
 
 
+
 </html>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $("#tesAjax").click(function () {
+        alert("kkk");
+        $.ajax({
+            url: "@Url.Action("testAjax", "Account")",
+            type: "POST",
+            async: false,
+            cache: false,
+            success: function (ruslt) {
+                $("testAjax").html(ruslt);
+            }
+        });
+
+    });
+</script>

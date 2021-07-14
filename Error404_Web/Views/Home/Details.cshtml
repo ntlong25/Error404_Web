@@ -13,8 +13,8 @@
                 <!-- BSTORE-BREADCRUMB START -->
                 <div class="bstore-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">@Html.ActionLink("Trang chủ", "Index", "Home")</li>
-                        <li class="breadcrumb-item">@Html.ActionLink(@Model.LoaiSP.DanhMuc.TenDM, "Index", "Product")</li>
+                        <li class="breadcrumb-item">@Html.ActionLink("Trang chủ", "Home", "Home")</li>
+                        <li class="breadcrumb-item">@Html.ActionLink(@Model.LoaiSP.DanhMuc.TenDM, "Category/"+Model.LoaiSP.MaDM, "Home")</li>
                         <li class="breadcrumb-item active" aria-current="page">@Model.TenSP</li>
                     </ol>
                 </div>

@@ -217,8 +217,8 @@
                                 <li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                     <div class="single-product-item">
                                         <div class="product-image">
-                                            <a href="@Url.Action("Details", "Product", new { id=item.MaSP })"><img src="~/Assets/@item.img" alt="product-image" /></a>
-                                            <a href="@Url.Action("Details", "Product",new { id=item.MaSP })" class="new-mark-box">new</a>
+                                            <a href="@Url.Action("Details", "Home", new { id=item.MaSP })"><img src="~/Assets/@item.img" alt="product-image" /></a>
+                                            <a href="@Url.Action("Details", "Home",new { id=item.MaSP })" class="new-mark-box">new</a>
                                             <div class="overlay-content">
                                                 <ul>
                                                     <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
@@ -239,7 +239,7 @@
                                                 </div>
 
                                             </div>
-                                            <a href="@Url.Action("Details", "Product",new { id=item.MaSP })">@item.TenSP</a>
+                                            <a href="@Url.Action("Details", "Home",new { id=item.MaSP })">@item.TenSP</a>
                                             <div class="price-box">
                                                 <span class="price">$@item.DonGia</span>
                                             </div>
@@ -256,7 +256,7 @@
                 <div class="product-shooting-result product-shooting-result-border">
                     <div class="showing-next-prev">
                         <ul class="pagination">
-                            @Html.PagedListPager(Model,page=>Url.Action("Index", new {page=page}))
+                            @Html.PagedListPager(Model, page => Url.Action("Category", new { page = page }))
                         </ul>
                     </div>
                 </div>
