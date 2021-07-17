@@ -34,6 +34,7 @@ namespace Error404_Web.Models.Error404_Entity
         public Nullable<short> SLTon { get; set; }
         public string Description { get; set; }
         public string MoreInfo { get; set; }
+        public DateTime DateAdd { get; set; }
         public Nullable<int> Views { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

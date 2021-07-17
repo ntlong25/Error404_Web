@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Chi Tiết Sản Phẩm";
+}
+
+@model Error404_Web.Models.Error404_Entity.SanPham
+
+<style>
+    .table_productDetail {
+        height: 800px;
+        overflow-y: scroll;
+    }
+</style>
+<div class="table_productDetail" id="customers1">
+    <table class="table">
+        <tr>
+            <th colspan="2" style="background: rgb(84 109 155);font-size: 20px;">Thông Tin Sản Phẩm</th>
+        </tr>
+        <tr>
+            <th>Mã Sản Phẩm</th>
+            <td>@Model.MaSP</td>
+        </tr>
+        <tr>
+            <th>Tên Sản Phẩm</th>
+            <td>@Model.TenSP</td>
+
+        </tr>
+        <tr>
+            <th>Loại</th>
+            <td>@Model.LoaiSP.TenLSP</td>
+        </tr>
+        <tr>
+            <th>
+                Hình
+            </th>
+            <td>
+                <div class="card-deck">
+                    <div class="card mb-4" style="width: 104px;float: left;">
+                        <figure class="snip0068 yellow">
+                            <img src="~/@Model.img" alt="" style="width :100%; object-fit:contain" />
+
+                        </figure>
+                    </div>
+                    <div class="card mb-4" style="width: 104px;float: left;">
+                        <figure class="snip0068 yellow">
+                            <img src="~/@Model.img2" alt="" style="width :100%; object-fit:contain" />
+
+                        </figure>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Đơn Giá</th>
+            @{ var tempPrice = String.Format("{0:#,##0.##}", Model.DonGia);
+                tempPrice += "đ"; }
+            <td>
+                @tempPrice
+            </td>
+        </tr>
+        <tr>
+            <th>Giá</th>
+            @{ var tempPriceSale = String.Format("{0:#,##0.##}", Model.GiaKM);
+                tempPriceSale += "đ"; }
+            <td>
+                @tempPriceSale
+            </td>
+        </tr>
+        <tr>
+            <th>Đánh giá</th>
+            <td>
+                @Model.Rate.Count()
+            </td>
+        </tr>
+        <tr>
+            <th>Số lượng</th>
+            <td>
+                @Model.SLTon
+            </td>
+        </tr>
+        <tr>
+            <th>Mô tả</th>
+            <td>
+                @Model.Description
+            </td>
+        </tr>
+        <tr>
+            <th>Thông tin khác</th>
+            <td>
+                @Model.MoreInfo
+            </td>
+        </tr>
+        <tr>
+            <th>Ngày thêm</th>
+            <td>
+                @Model.DateAdd
+            </td>
+        </tr>
+    </table>
+</div>
+

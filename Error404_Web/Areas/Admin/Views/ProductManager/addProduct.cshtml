@@ -1,0 +1,190 @@
+﻿@{ Error404_Web.Areas.Admin.Controllers.ProductManagerController PMC = new Error404_Web.Areas.Admin.Controllers.ProductManagerController(); }
+
+<style>
+    .btn_Add {
+        border: none;
+        color: white;
+        background: #D10024;
+        font-size: 20px;
+    }
+
+        .btn_Add:hover {
+            background: #FF0000;
+        }
+</style>
+
+<div class="modal1-content" style="width: 43%; margin-left: 28.5%">
+
+    <table class="cus2">
+        <tr>
+            <th colspan="2" style="background: rgb(58, 86, 119);">
+                <div>
+                    <h1>Thêm sản phẩm </h1>
+                </div>
+
+            </th>
+        </tr>
+
+        <tr>
+            <th style="width:150px;">
+                <label>Tên Sản Phẩm</label>
+            </th>
+            <td>
+                <input type="text" name="ProductsName" id="add_productName" placeholder="tên sản phẩm...">
+            </td>
+        </tr>
+        @{ IEnumerable<Error404_Web.Models.Error404_Entity.LoaiSP> listType = PMC.loadLoaiSP(); }
+        <tr>
+            <th>
+                <label>Loại</label>
+            </th>
+            <td>
+                <select id="add_productType">
+                    @foreach (var item in listType)
+                    {
+        <option value="@item.MaLSP">@item.TenLSP</option>}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label class="picture">Hình1</label>
+            </th>
+            <td>
+                <div style="float: none;">
+                    <label for="filebutton" id="upload-btn">
+                        <span>
+                            <i class="fas fa-folder-open " style="color:#fad859;"></i>
+                            Open file
+                        </span>
+                    </label>
+                    <input id="filebutton" name="Pic" class="input-file" type="file" multiple accept="image/*"
+                           style="display: none" />
+                </div>
+                <div class="card-deck" id="appearPic">
+
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>Số lượng</label> <br>
+            </th>
+            <td>
+                <input id="add_productAmount" class="numberrit" type="number" min="1" value="100">
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>Mô tả</label>
+            </th>
+            <td>
+                <textarea class="textarea" id="add_productDescription" name="Config" placeholder="mô tả sản phẩm..."></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>Thông tin khác</label>
+            </th>
+            <td>
+                <textarea class="textarea" id="add_productMoreInfo" name="Config" placeholder="thông tin khác..."></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:150px;">
+                <label>Giá</label>
+            </th>
+            <td>
+                <input type="text" name="ProductPrice" id="add_productPrice" placeholder="giá sản phẩm...">
+            </td>
+        </tr>
+        <tr>
+            <th style="width:150px;">
+                <label>Giá Khuyến Mãi</label>
+            </th>
+            <td>
+                <input type="text" name="ProductPriceSale" id="add_productPriceSale" placeholder="giá khuyến mãi sản phẩm...">
+            </td>
+        </tr>
+    </table>
+</div>
+
+<input class="btn_Add" type="button" value="Thêm" style="margin-left: 61.5%; width: 10%" />
+
+<!--Chỉnh sửa thông tin sản phẩm-->
+<script>
+    $('.btn_Add').click(function () {
+        //thông tin sản phẩm
+        var pic = document.getElementsByClassName("takePath");
+        if (pic.length < 2) {
+            alert("Vui lòng thêm đủ hình");
+        } else {
+            var TenSP = document.getElementById("add_productName").value;
+            var LoaiSP = document.getElementById("add_productType").value;
+            var SoLuong = document.getElementById("add_productAmount").value;
+            var Description = $("#add_productDescription").val();
+            var MoreInfo = $("#add_productDescriptionMoreInfo").val();
+            var DonGia = document.getElementById("add_productPrice").value;
+            var GiaKM = document.getElementById("add_productPriceSale").value;
+            var img = pic[0].value;
+            var img2 = pic[1].value;
+
+            $.ajax({
+                url: '@Url.Action("addSP", "ProductManager")',
+                type: 'POST',
+                data: {
+                    LoaiSP: LoaiSP,
+                    img: img,
+                    img2: img2,
+                    TenSP: TenSP,
+                    DonGia: DonGia,
+                    GiaKM: GiaKM,
+                    SoLuong: SoLuong,
+                    Description: Description,
+                    MoreInfo: MoreInfo,
+                },
+                success: function () {
+                    location.reload();
+                },
+                error: function () {
+                    alert("fail");
+                },
+            });
+        }
+    });
+</script>
+
+<script>//Xóa ảnh
+    $("body").on("click", ".removePic", function () {
+        $(this).parent().parent().parent().parent().parent().remove();
+    });
+
+    //Up ảnh
+    $("#filebutton").change(function (event) {
+
+        var dem = document.getElementsByClassName("pictureProduct").length;
+
+        var files = event.target.files;
+
+        for (var i = 0; i < files.length && i < 4 - dem; i++) {
+            var file = files[i];
+            var create = document.createElement("div");
+
+            create.innerHTML = '<div class="card mb-4 pictureProduct" style="width: 104px; float: left;">' +
+                '<figure class="snip0068 yellow">' +
+                '<input type="text" value="Asset/images/' + file.name + '" style="display: none" class="takePath" />' +
+                '<img src="/Asset/images/' + file.name + '"/>' +
+                '<figcaption> ' +
+                '<div>' +
+                '<span class="removePic"><i class="far fa-trash-alt"></i> Remove</span>' +
+                '</div>' +
+                '</figcaption>' +
+                '</figure>' +
+                '</div>';
+
+            $("#appearPic").prepend(create);
+        }
+    });
+    </script>
+

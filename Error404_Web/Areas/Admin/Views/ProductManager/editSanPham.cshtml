@@ -1,0 +1,286 @@
+﻿
+@{
+    ViewBag.Title = "Sửa Sản Phẩm";
+}
+
+@model Error404_Web.Models.Error404_Entity.SanPham
+
+<style>
+    .table-wrapper {
+        position: relative;
+    }
+
+    #table-scroll {
+        height: 550px;
+        overflow: auto;
+    }
+
+    #table-wrapper table {
+        width: 70%;
+        background: white;
+        margin-left: 23.8%;
+    }
+
+    .tb_config th {
+        position: sticky;
+        top: 0px;
+        background: #CCCCCC;
+        z-index: 10;
+        text-align: center;
+    }
+
+    .textarea {
+        text-align: left;
+    }
+
+    .btn_Edit {
+        border: none;
+        color: white;
+        background: #D10024;
+        font-size: 20px;
+    }
+
+        .btn_Edit:hover {
+            background: #FF0000;
+        }
+</style>
+
+@{ Error404_Web.Areas.Admin.Controllers.ProductManagerController HC = new Error404_Web.Areas.Admin.Controllers.ProductManagerController(); }
+
+<table class="cus1">
+    <tr>
+        <th style="width: 50%;font-size: 25px;background: #d6dee9;" onclick="Functionclick1()" class="edit">
+            Sửa thông tin
+        </th>
+    </tr>
+</table>
+
+<div id="table1" style="background: red; width: 43%; margin-left: 28.5%">
+    <table class="cus2">
+
+        <tr>
+            <th style="width:150px;">
+                <label>Tên sản phẩm</label>
+            </th>
+            <td>
+                <input type="text" name="ProductsName" id="edit_productName" value="@Model.TenSP">
+            </td>
+        </tr>
+        @{ IEnumerable<Error404_Web.Models.Error404_Entity.LoaiSP> listLSP = HC.loadLoaiSP(); }
+        <tr>
+            <th>
+                <label>Loại</label>
+            </th>
+            <td>
+                <select id="edit_productType">
+                    @foreach (var item in listLSP)
+                    {
+                        if (item.MaLSP == Model.LoaiSP.MaLSP)
+                        {
+                            <option value="@item.MaLSP" selected>@item.TenLSP</option>
+                        }
+                        else
+                        {
+                            <option value="@item.MaLSP">@item.TenLSP</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label class="picture">Hình</label>
+            </th>
+            <td>
+                <div style="float: none;">
+                    <label for="filebutton" id="upload-btn">
+                        <span>
+                            <i class="fas fa-folder-open " style="color:#fad859;"></i>
+                            Open file
+                        </span>
+                    </label>
+                    <input id="Mainpic" name="Pic2" class="input-file" type="file" multiple accept="image/*"
+                           style="display: none" />
+                </div>
+                <div class="card-deck" id="appearMainPic">
+                    <div>
+                        <div class="card mb-4 pictureProductMain" style="width: 104px;float: left;">
+                            <figure class="snip0068 yellow">
+                                <input type="text" value="@Model.img" style="display: none" class="takePath" />
+                                <img src="~/@Model.img" alt="sample12" />
+                                <figcaption>
+                                    <div>
+                                        <span class="removePic"><i class="far fa-trash-alt"></i> Remove</span>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-deck" id="appearMainPic">
+                    <div>
+                        <div class="card mb-4 pictureProductMain" style="width: 104px;float: left;">
+                            <figure class="snip0068 yellow">
+                                <input type="text" value="@Model.img2" style="display: none" class="takePath" />
+                                <img src="~/@Model.img2" alt="sample12" />
+                                <figcaption>
+                                    <div>
+                                        <span class="removePic"><i class="far fa-trash-alt"></i> Remove</span>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>Số lượng</label> <br>
+            </th>
+            <td>
+                <input id="edit_productAmount" class="numberrit" type="number" value="@Model.SLTon" min="1">
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <label>Mô tả</label>
+            </th>
+            <td>
+                <textarea class="textarea" id="edit_productDescription" name="Config">@Model.Description</textarea>
+            </td>
+
+        </tr>
+        <tr>
+            <th style="width:150px;">
+                <label>Giá Sản Phẩm</label>
+            </th>
+            <td>
+                <input type="text" name="ProductPrice" id="edit_productPrice" value="@Model.DonGia">
+            </td>
+        </tr>
+        <tr>
+            <th style="width:150px;">
+                <label>Giá Khuyến Mãi</label>
+            </th>
+            <td>
+                <input type="text" name="ProductPrice" id="edit_productPriceSale" value="@Model.GiaKM">
+            </td>
+        </tr>
+    </table>
+
+</div>
+<input class="btn_Edit" type="button" value="Chỉnh sửa" style="margin-left: 61.5%; width: 10%" />
+
+<script>
+    // Chỉnh sửa thông tin sản phẩm
+    $(".btn_Edit").click(function () {
+
+        var pic = document.getElementsByClassName("takePath");
+        if (pic.length < 2) {
+            alert("Vui lòng thêm đủ hình");
+        } else {
+            //thông tin sản phẩm
+            var TenSP = document.getElementById("edit_productName").value;
+            var LoaiSP = document.getElementById("edit_productType").value;
+            var SoLuong = document.getElementById("edit_productAmount").value;
+            var Description = $("#edit_productDescription").val();
+            var DonGia = document.getElementById("edit_productPrice").value;
+            var GiaKM= document.getElementById("edit_productPriceSale").value;
+            var img = pic[0].value;
+            var img2 = pic[1].value;
+
+            $.ajax({
+                url: '@Url.Action("upProduct", "ProductManager")',
+                type: 'POST',
+                data: {
+                    MaSP: @Model.MaSP,
+                    LoaiSP: LoaiSP,
+                    img: img,
+                    img2: img2,
+                    TenSP: TenSP,
+                    DonGia: DonGia,
+                    GiaKM: GiaKM,
+                    SoLuong: SoLuong,
+                    Description: Description,
+                    MoreInfo: MoreInfo,
+                },
+                success: function () {
+                    location.reload();
+                },
+                error: function () {
+                    alert("fail");
+                },
+            });
+        }
+    });
+
+    //Xóa ảnh
+    $("body").on("click", ".removePic", function () {
+        $(this).parent().parent().parent().parent().parent().remove();
+    });
+
+    //Up ảnh
+    $("#filebutton").change(function (event) {
+
+        var dem = document.getElementsByClassName("pictureProduct").length;
+
+        var files = event.target.files;
+
+        for (var i = 0; i < files.length && i < 2-dem; i++) {
+            var file = files[i];
+            var create = document.createElement("div");
+
+            create.innerHTML = '<div class="card mb-4 pictureProduct" style="width: 104px; float: left;">' +
+                                    '<figure class="snip0068 yellow">' +
+                                        '<input type="text" value="Asset/images/'+ file.name +'" style="display: none" class="takePath" />' +
+                                        '<img src="/Asset/images/' + file.name + '"/>' +
+                                        '<figcaption> ' +
+                                            '<div>' +
+                                                '<span class="removePic"><i class="far fa-trash-alt"></i> Remove</span>' +
+                                            '</div>' +
+                                        '</figcaption>' +
+                                    '</figure>' +
+                                '</div>';
+
+            $("#appearPic").prepend(create);
+        }
+    });
+
+    
+</script>
+
+
+<!-- Hàm thử nghiệm -->
+<script>/*$(".configInf").change(function () {
+        alert("iebfi");
+        var parent = $(this).parent().parent();
+        var check = $(parent).children().children().children(".click");
+        if ($(this).val != "") {
+            check.checked = true;
+        } else {
+            check.checked = false;
+        }
+    });
+
+    $(".btn_Check").click(function () {
+        var configs = document.getElementsByClassName("config_Product");
+        var name = "";
+        var inf = "";
+
+        for (var i = 0; i < configs.length; i++) {
+            var config = configs[i];
+            var configName = $(config).children().children(".configName").val();
+            var configInf = $(config).children().children(".configInf");
+            var condition = $(config).children().children().children(".click").is(":checked");
+
+            if (condition == true) {
+                name += configName + "&";
+                inf += $(configInf).val() + "&";
+            }
+
+        }
+        alert(name);
+        alert(inf);
+    });*/</script>
+
